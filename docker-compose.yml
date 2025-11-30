@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  mcp-tools:
+  mcp-browser-tool:
     build: .
     ports:
       - "9000:9000"
