@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  mcp-tools:
+    build: .
+    ports:
+      - "9000:9000"
+    environment:
+      - LLM=<your_searxng_url_here
+      - SEARXNG_URL=<your_searxng_url_here>
+    volumes:
+      - ./models:/app/models
