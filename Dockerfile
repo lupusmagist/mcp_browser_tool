@@ -1,6 +1,6 @@
 FROM python:3.12-slim
 
-RUN apt-get install build-essential cmake -y
+RUN apt-get update && apt-get install build-essential cmake python3-dev -y
 
 RUN pip install uv
 
