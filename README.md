@@ -10,6 +10,9 @@ A Model Context Protocol (MCP) server that provides web browsing, searching, and
 - **Text Summarization**: Summarize text using a local LLM (optional)
 - **Combined Operations**: Fetch and extract page content in one operation
 
+SearXNG is needed for this to work, the easiest is to use the Docker version.
+Instructions here: https://docs.searxng.org/admin/installation-docker.html
+
 ## Installation
 
 1. Install Python dependencies:
@@ -27,8 +30,8 @@ playwright install
 Create a `.env` file with the following optional variables:
 
 ```env
-# SearXNG instance URL (default: http://192.168.77.8:8888)
-SEARXNG_URL=http://your-searxng-instance:8888
+# SearXNG instance URL
+SEARXNG_URL=<your-searxng-server-address>
 
 # Path to local LLM model for summarization (optional)
 LLM=/path/to/your/model.gguf
@@ -67,6 +70,17 @@ python main.py
 
 ### As HTTP Server
 The server runs on `http://127.0.0.1:9000` by default.
+
+## Add to mcp.json
+```
+{
+  "mcpServers": {
+    "web-tool-server": {
+      "url": "http://<your-server-ip>:9000/mcp"
+    }
+  }
+}
+```
 
 ## Available Tools
 
@@ -159,32 +173,7 @@ Close the browser instance and clean up resources.
 }
 ```
 
-## Architecture
-
-The server uses a singleton pattern to maintain a single browser instance across multiple tool calls, which improves performance and resource usage. The browser is automatically initialized on first use and can be explicitly closed using the `close_browser` tool.
-
-### Key Components
-
-- **main.py**: MCP server implementation with tool definitions
-- **browser_tool.py**: Browser automation and web interaction logic
-- **tests/**: Unit tests for both server and browser tools
-
-## Development
-
-### Running Tests
-```bash
-pytest tests/
-```
-
-### Testing Individual Tools
-Use the MCP inspector or connect to the server using an MCP client to test individual tools.
-
-## Troubleshooting
-
-### Browser fails to launch
-- Ensure Playwright is installed: `playwright install`
-- Check that Chromium is installed: `playwright install chromium`
-
+## Errors:
 ### SearXNG search fails
 - Verify your SearXNG instance is running and accessible
 - Check the SEARXNG_URL environment variable
